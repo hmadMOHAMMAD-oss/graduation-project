@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Firebase Server Auth</title>
+  <!-- CSS LINK -->
+  <link rel="stylesheet" href="./loginStyle.css" />
+  <!-- FIRE_BASE CONNECTION -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
+</head>
+
+<body>
+ 
+  <!-- HTML ELEMENTS -->
+  <div class=""></div> </div>
+  <div class="logoDiv">
+  <img src="logo.png"  alt="">
+  <h2 class="er"><span>P</span>ocket <span>P</span>harmacy</h2>
+  </div>
+
+  <section>
+    <form id="login">
+      <label><span>Login</span> </label>
+      <input class="inputStyle" type="text" name="login" />
+      <label><span class="err">Password</span></label>
+      <input class="pass inputStyle" type="password" name="password" />
+      <div class=" add"></div>
+      <button class="button">Log in </button>
+    </form>
+  </section>
+ 
+
+
+  <!-- FIRE_BASE CONNECTION -->
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const firebaseConfig = {
+        apiKey: "AIzaSyCRBlBSaOotcyp2ogXhNcbeiFQC74FGDmA",
+        authDomain: "adminsite-e9b68.firebaseapp.com",
+        databaseURL: "https://adminsite-e9b68-default-rtdb.firebaseio.com",
+        projectId: "adminsite-e9b68",
+        storageBucket: "adminsite-e9b68.appspot.com",
+        messagingSenderId: "448337078221",
+        appId: "1:448337078221:web:3ac9c8c711a947b8468684"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+      document
+        .getElementById("login")
+        .addEventListener("submit", (event) => {
+          event.preventDefault();
+          const load = document.querySelector('.add').classList.add('cyrcle');
+          const error = document.querySelector('.err');
+          document.querySelector('.button').classList.add('buttonEN')
+          const login = event.target.login.value;
+          const password = event.target.password.value;
+          
+
+          // AUTHENTICATION CONNECTION -->
+          firebase
+            .auth()
+            .signInWithEmailAndPassword(login, password).catch(function (e){ error.innerHTML= 'invalid password';
+            document.querySelector('.button').classList.remove('buttonEN')
+             const load = document.querySelector('.add').classList.remove('cyrcle');
+             const passIput = document.querySelector('.pass').classList.add('passInput');
+            } )
+            .then(({ user }) => {
+              return user.getIdToken().then((idToken) => {
+                return fetch("/sessionLogin", {
+                  method: "POST",
+                  headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+                  },
+                  body: JSON.stringify({ idToken }),
+                });
+              });
+              user.console.error();
+            })
+            .then(() => {
+              window.location.assign("/profile");
+            });
+        }); 
+    });
+  </script>
+
+</body>
+
+</html>

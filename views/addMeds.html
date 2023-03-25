@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Firebase Server Auth</title>
+  <!-- CSS LINK -->
+  <link  rel="stylesheet" href="/addMeds.css" />
+  <!-- FontWesome -->
+  <script src="https://kit.fontawesome.com/08d515a87b.js" crossorigin="anonymous"></script>
+  <!-- FIRE BASE CONNECTION -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js" ></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js" ></script>
+</head>
+
+<body>
+  <nav class="nav">
+    <h2 class="er modal"><span class="spanR">P</span>ocket <span class="spanR">P</span>harmacy</h2>
+
+    <div class="sections">
+      <span class="section"> <a href="/profile"> Home</a></span>
+      <span class="section">
+        <a href="/addMeds">Add Medicine</a></span>
+      <span class="section">
+        <a href="/sessionLogout" class="log">Log out
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> </a>
+      </span>
+    </div>
+  </nav>
+
+  <main>
+    <div class="addMeds">
+
+    </div>
+  </main>
+
+
+  <script>
+    document.querySelectorAll('.section')[1].classList.add('spanR' , 'sectionsActive')
+    document.querySelector('.sections').addEventListener('click' , e => {
+      const arr = [...document.querySelectorAll('.section')];
+      arr.map(e => {
+      console.log(e.classList.remove('sectionsActive' , 'spanR'))//classList.classList.remove('sectionsActive');
+    })
+    .target.classList.toggle('sectionsActive');
+})
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCRBlBSaOotcyp2ogXhNcbeiFQC74FGDmA",
+        authDomain: "adminsite-e9b68.firebaseapp.com",
+        databaseURL: "https://adminsite-e9b68-default-rtdb.firebaseio.com",
+        projectId: "adminsite-e9b68",
+        storageBucket: "adminsite-e9b68.appspot.com",
+        messagingSenderId: "448337078221",
+        appId: "1:448337078221:web:3ac9c8c711a947b8468684"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const database = firebase.database();
+ 
+ 
+    //   const firebaseConfig = {
+    //     apiKey: "AIzaSyCRBlBSaOotcyp2ogXhNcbeiFQC74FGDmA",
+    //     authDomain: "adminsite-e9b68.firebaseapp.com",
+    //     databaseURL: "https://adminsite-e9b68-default-rtdb.firebaseio.com",
+    //     projectId: "adminsite-e9b68",
+    //     storageBucket: "adminsite-e9b68.appspot.com",
+    //     messagingSenderId: "448337078221",
+    //     appId: "1:448337078221:web:3ac9c8c711a947b8468684"
+    //   };
+
+    //   firebase.initializeApp(firebaseConfig);
+      
+    //   function writeondata ( userid , name , email){
+    //   const db = getDatabase();
+    //   const reference = ref(db , 'user/' , userID);
+    //   set( reference , {
+    //     username : name,
+    //     email : email,
+    //   })
+    // }
+
+    // writeondata(1 , 'ahamd' , 'email@gmail.com');
+  </script>
+
+</body>
+
+</html>
